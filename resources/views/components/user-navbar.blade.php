@@ -5,10 +5,18 @@
     </div>
     <div class="space-x-4">
          <a class="text-green-900 hover:text-blue-500" href="{{ route('home') }}">Home</a>
-        <a class="text-green-900 hover:text-blue-500" href="/admin-categories">Categories</a>
+        <a class="text-green-900 hover:text-blue-500" href="/">Categories</a>
+        @if (Session('user'))
 
-          <a class="text-green-900 hover:text-blue-500" href="">Login </a>
+    <a class="text-green-900 hover:text-blue-500" href="/user-details">Welcome ,{{ Session('user')->name }} </a>
+           <a class="text-green-900 hover:text-blue-500" href="/user-logout">Logout</a>
+           @else
+               <a class="text-green-900 hover:text-blue-500" href="/user-login">Login </a>
            <a class="text-green-900 hover:text-blue-500" href="/user-signup">SignUp</a>
+
+        @endif
+
+
            <a class="text-green-900 hover:text-blue-500" href="/admin-logout">Blog</a>
     </div>
    </div>
