@@ -16,6 +16,7 @@ use App\Mail\UserForgotPassword;
 use Illuminate\Container\Attributes\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
+use Spatie\Browsershot\Browsershot;
 
 class UserController extends Controller
 {
@@ -25,6 +26,11 @@ class UserController extends Controller
        $quizData =  Quiz::withCount('Records')->orderBy('records_count','desc')->take(5)->get();
 
         return view('welcome', ['categories' => $categories,'quizData'=>$quizData]);
+    }
+
+    function categories(){
+         $categories = Category::withCount('quizzes')->orderBy('quizzes_count','desc')->paginate(3);
+        return view('categories-list',['categories'=>$categories]);
     }
 
     function userQuizList($id, $category)
@@ -253,6 +259,33 @@ function userSetForgotPassword(Request $request){
            }
 
          }
+
+}
+function certificate(){
+    $data=[];
+    $data['quiz']= str_replace('-',' ',Session::get('currentQuiz')['quizName']);
+       $data['name']=Session::get('user')['name'];
+    //    return $data;
+
+    return view('certificate',['data'=>$data]);
+}
+
+
+function downloadCertificate(){
+      $data=[];
+    $data['quiz']= str_replace('-',' ',Session::get('currentQuiz')['quizName']);
+       $data['name']=Session::get('user')['name'];
+    //    return $data;
+
+   $html= view('download-certificate',['data'=>$data])->render();
+   return response(
+    Browsershot::html($html)->pdf()
+   )->withHeaders(
+    [
+        'Content-Type' =>"application/pdf",
+        'Content-Disposition'=>'attachment;filename="certificate.pdf"'
+    ]
+    );
 
 }
 

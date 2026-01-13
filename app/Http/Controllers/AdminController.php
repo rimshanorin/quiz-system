@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Category;
 use App\Models\Quiz;
 use App\Models\Mcq;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -37,9 +38,9 @@ class AdminController extends Controller
     function dashboard()
     {
         $admin = Session::get('admin');
-
-        if ($admin) {
-            return  view('admin', ["name" => $admin->name]);
+    if ($admin) {
+ $users = User::orderBy('id','desc')->paginate(10);
+            return  view('admin', ["name" => $admin->name,"users"=>$users]);
         } else {
             return redirect('admin-login');
         }

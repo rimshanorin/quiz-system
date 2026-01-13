@@ -67,40 +67,14 @@
                     </li>
                 @endforeach
             </ul>
-        </div>
-    </div>
-       <div class="bg-gray-100 flex flex-col items-center  pt-5 ">
-
-        <div class="w-200">
-             <h1 class="text-2xl text-green-900 text-center my-10">Top Quiz</h1>
-
-            <ul class="border border-gray-200 mb-20">
-
-                <li class="p-2 font-bold">
-                    <ul class="flex justify-between">
-
-                        <li class="w-150">Name</li>
-                      <li class="w-50">Action</li>
-
-                    </ul>
-                </li>
-                @foreach ($quizData as $item)
-                    <li class="even:bg-gray-200 p-2">
-                        <ul class="flex justify-between">
-
-                            <li class="w-150">{{ $item->name }}</li>
-                    <li class="w-50">
-                                <a href="/start-quiz/{{ $item->id }}/{{ str_replace(' ','-',$item->name) }}" class="text-green-500 font-bold">
-                                    Attempt Quiz
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                @endforeach
-            </ul>
+            <div class="mb-10 mt-5">
+                {{ $categories->links() }}
+            </div>
         </div>
     </div>
 
-   
+
+
     <x-footer-user></x-footer-user>
 </body>
+
